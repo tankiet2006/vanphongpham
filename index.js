@@ -14,7 +14,6 @@ var SanPhamRouter = require('./routers/sanpham');
 var GioHangRouter = require('./routers/giohang');
 var ThanhToanRouter = require('./routers/thanhtoan');
 var HoaDonRouter = require('./routers/hoadon');
-var ThongKeRouter = require('./routers/thongke');
 
 async function Default_Account() {
     const Exsited = await TaiKhoan.findOne({ TenDangNhap: 'admin' });
@@ -89,7 +88,6 @@ app.use('/sanpham', SanPhamRouter);
 app.use('/giohang', GioHangRouter);
 app.use('/thanhtoan', ThanhToanRouter);
 app.use('/hoadon', HoaDonRouter);
-app.use('/thongke', ThongKeRouter);
 app.use(express.static('public'));
 
 app.listen(3000, () => {
