@@ -4,7 +4,7 @@
   "description": "Web mô hình xe + MongoBD Atlas",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "Nguyễn Hữu Khôi Nguyên",
   "license": "ISC",
