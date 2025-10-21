@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nova Cars - Cửa hàng mô hình xe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --neon-green: #39FF14;
+            --neon-aqua: #00FFFF;
+            --neon-purple: #9c27b0;
+            --neon-yellow: #FFEE32;
+            --neon-red: #FF073A;
+            --dark-bg: #000;
+            --card-bg: #111;
+        }
+
+        body {
+            background-color: var(--dark-bg) !important;
+        }
+
+        .container {
+            background-color: transparent !important;
+        }
+
+        /* Product Cards */
+        .product-card {
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--neon-purple) !important;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px var(--neon-purple) !important;
+            border-color: var(--neon-purple) !important;
+            z-index: 10;
+        }
+
+        .product-img-container {
+            padding: 15px;
+            text-align: center;
+            background: #000;
+        }
+
+        .product-img {
+            height: 180px;
+            width: 100%;
+            object-fit: contain;
+            border: 1px solid var(--neon-green);
+        }
+
+        .product-title {
+            color: var(--neon-aqua) !important;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .product-specs {
+            margin-bottom: 15px;
+        }
+
+        .product-specs p {
+            color: var(--neon-yellow) !important;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .product-specs strong {
+            color: var(--neon-purple) !important;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--neon-aqua);
+            margin: 15px 0;
+        }
+
+        .btnChiTiet {
+            width: 100%;
+            background-color: var(--neon-green) !important;
+            color: var(--dark-bg) !important;
+            border: var(--neon-green) !important;
+            font-weight: bold !important;
+        }
+
+        .btnChiTiet:hover {
+            background-color: var(--neon-yellow) !important;
+        }
+
+        .btnSanPhamAll {
+            border: 1px solid var(--neon-green);
+            background-color: var(--neon-green) !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+
+        .btnSanPhamAll:hover {
+            background-color: var(--neon-yellow) !important;
+            border: 1px solid var(--neon-yellow) !important;
+        }
+
+        /* Empty state */
+        .alert-empty {
+            background-color: rgba(57, 255, 20, 0.1) !important;
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .alert-empty i {
+            font-size: 2rem;
+            color: var(--neon-red) !important;
+            margin-bottom: 15px;
+        }
+
+        .alert-empty h4 {
+            color: var(--neon-red) !important;
+            margin-bottom: 10px;
+        }
+
+        /* Section title */
+        .text-aqua {
+            color: var(--neon-aqua) !important;
+            text-shadow: 0 0 8px var(--neon-aqua);
+        }
+
+        .border-neon {
+            border-color: var(--neon-aqua) !important;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include header and navbar -->
+    <%- include('header') %>
+    <%- include('navbar') %>
+
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="text-aqua"><i class="bi bi-stars"></i> Sản phẩm mới nhất</h2>
+                <hr class="border-neon">
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <% if (sanpham.length > 0) { %>
+                <% sanpham.forEach(function(sp) { %>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 product-card">
+                            <div class="product-img-container">
+                                <img src="<%= sp.HinhAnh && sp.HinhAnh.length > 0 ? sp.HinhAnh[0] : '/images/placeholder.jpg' %>" 
+                                    alt="<%= sp.TenSanPham %>" 
+                                    class="product-img">
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="product-title">
+                                    <a href="/sanpham_chitiet/<%= sp._id %>" class="text-info text-decoration-none">
+                                        <%= sp.TenSanPham %>
+                                    </a>
+                                </h5>
+
+                                <div class="product-specs">
+                                    <p><i class="bi bi-tag"></i> <strong>Hãng:</strong> <%= sp.HangSanXuat.TenHangSanXuat %></p>
+                                    <p><i class="bi bi-percent"></i> <strong>Tỷ lệ:</strong> <%= sp.TyLe %></p>
+                                    <p><i class="bi bi-gem"></i> <strong>Chất liệu:</strong> <%= sp.ChatLieu %></p>
+                                </div>
+
+                                <div class="product-price">
+                                    <%= sp.Gia.toLocaleString() %>₫
+                                </div>
+                            </div>
+
+                            <div class="card-footer p-2">
+                                <a href="/sanpham/chitiet/<%= sp._id %>" class="btnChiTiet btn btn-outline-primary w-100 btn-sm">
+                                    <i class="bi bi-info-circle"></i> Chi tiết
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-12">
+                    <div class="alert-empty text-center p-4">
+                        <i class="bi bi-exclamation-triangle-fill fs-1 text-danger"></i>
+                        <h4 class="text-danger mt-2">Hiện chưa có sản phẩm nào</h4>
+                        <p class="text-success">Vui lòng quay lại sau...</p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/sanpham" class="btn btnSanPhamAll">
+                <i class="bi bi-grid"></i> Xem tất cả sản phẩm
+            </a>
+        </div>
+    </div>
+
+    <!-- Include footer -->
+    <%- include('footer') %>
+</body>
+</html>

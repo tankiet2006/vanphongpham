@@ -1,0 +1,19 @@
+{
+  "name": "mohinhxe",
+  "version": "1.0.0",
+  "description": "Web mô hình xe + MongoBD Atlas",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "author": "Nguyễn Hữu Khôi Nguyên",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "mongoose": "^8.16.0",
+    "multer": "^2.0.1"
+  }
+}

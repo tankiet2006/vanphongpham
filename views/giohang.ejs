@@ -1,0 +1,312 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Giỏ hàng</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+        <style>
+            :root {
+                --neon-green: #39FF14;
+                --neon-aqua: #00FFFF;
+                --neon-yellow: #FFEE32;
+                --neon-red: #FF073A;
+                --neon-purple: #A020F0;
+                --neon-orange: #ff8c00;
+                --dark-bg: #000;
+                --card-bg: #111;
+                --text-light: #EEE;
+            }
+
+            body {
+                background-color: var(--dark-bg);
+                color: var(--neon-green);
+                font-family: 'Courier New', monospace;
+            }
+
+            .header-bar {
+                border-bottom: 1px solid var(--neon-green);
+                padding-bottom: 10px;
+            }
+
+
+            .header-title {
+                color: var(--neon-aqua);
+                text-shadow: 0 0 5px var(--neon-aqua);
+                margin-bottom: 0;
+            }
+
+            .txtSearch {
+                background-color: var(--dark-bg) !important;
+                color: var(--neon-aqua) !important;
+                border: 1px solid var(--neon-green) !important;
+            }
+
+            .txtSearch:focus {
+                box-shadow: 0 0 10px var(--neon-aqua);
+                border-color: var(--neon-aqua) !important;
+            }
+
+            input::placeholder {
+                color: white !important;
+                opacity: 1; /* Firefox */
+            }
+
+            .list-container {
+                background-color: var(--card-bg);
+                padding: 30px;
+                margin-top: 30px;
+                border-radius: 8px;
+                border: 1px solid var(--neon-green);
+                box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+            }
+
+            .table {
+                color: var(--neon-green);
+                border-color: var(--neon-green) !important;
+            }
+            
+            .table th {
+                border: 1px solid var(--neon-green) !important;
+                color: var(--neon-yellow) !important;
+                background-color: var(--card-bg) !important;
+                border-color: var(--neon-green) !important;
+            }
+            
+            .table td {
+                border: 1px solid var(--neon-green) !important;
+                color: var(--neon-aqua) !important;
+                background-color: var(--dark-bg) !important;
+                border-color: var(--neon-green) !important;
+            }
+
+            .table tbody tr:hover td {
+                background-color: var(--card-bg) !important;
+                box-shadow: 0 0 5px var(--neon-aqua);
+                transition: all 0.2s ease-in-out;
+            }
+
+            .txtTongTien td {
+                color: var(--neon-orange) !important;
+                font-weight: bold;
+            }
+
+            .neon-checkbox {
+                width: 20px;
+                height: 20px;
+                accent-color: var(--neon-aqua);
+                box-shadow: 0 0 5px var(--neon-aqua);
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+            }
+
+            .neon-checkbox:hover {
+                transform: scale(1.2);
+                box-shadow: 0 0 10px var(--neon-aqua);
+            }
+
+            .neon-checkbox:checked {
+                box-shadow: 0 0 15px var(--neon-green);
+                accent-color: var(--neon-green);
+            }
+
+            .btn{
+                color: var(--dark-bg) !important;
+            }
+
+            .btnSearch {
+                background-color: var(--neon-green) !important;
+                color: var(--dark-bg) !important;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .btnSearch:hover {
+                background-color: var(--neon-aqua) !important;
+                box-shadow: 0 0 10px var(--neon-aqua);
+                border: 1px solid var(--neon-aqua) !important;
+            }
+
+            .btnXoa{
+                background-color: var(--neon-red) !important;
+            }
+
+            .btnQuayLai {
+                background-color: var(--neon-green) !important;
+                color: var(--dark-bg) !important;
+                font-weight: bold !important;
+            }
+
+            .btnQuayLai:hover {
+                background-color: var(--neon-yellow) !important;
+                box-shadow: 0 0 10px var(--neon-yellow);
+                border: 1px solid var(--neon-yellow) !important;
+            }
+
+            .btnThanhToan {
+                background-color: var(--neon-aqua) !important;
+                color: var(--dark-bg) !important;
+                font-weight: bold !important;
+            }
+
+            .btnThanhToan:hover {
+                background-color: var(--neon-purple) !important;
+                box-shadow: 0 0 10px var(--neon-purple);
+                border: 1px solid var(--neon-purple) !important;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- INCLUDE HEADER -->
+        <%- include('header') %>
+
+        <!-- MAIN CONTENT -->
+        <div class="container my-5">
+            <div class="list-container">
+                <div class="header-bar d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="header-title m-0"><i class="bi bi-list"></i> Giỏ hàng</h3>
+                    <form class="d-flex" role="search" style="max-width: 400px;">
+                        <input type="text" id="txtSearch" name="keyword"
+                            class="txtSearch form-control me-2 search-input"
+                            placeholder="Tìm kiếm tên sản phẩm">
+                        <button type="button" onclick="searchProducts()"
+                                class="btnSearch btn btn-success search-btn">
+                            <i class="bi bi-search"></i>    
+                        </button>
+                    </form>
+                </div>
+
+                <!-- DANH SÁCH SẢN PHẨM -->
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th width="60px">Xóa</th>
+                                <th>Chọn mua</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (giohang && giohang.length > 0) {
+                                let tongTien = 0;
+                                giohang.forEach((item, index) => {
+                                const sp = item.sanpham;
+                                const soLuong = item.soLuong;
+                                const tien = sp.Gia * soLuong;
+                                tongTien += tien;
+                            %>
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= sp.TenSanPham %></td>
+                                    <td><%= soLuong %></td>
+                                    <td><%= tien.toLocaleString('vi-VN') %> ₫</td>
+                                    <td>
+                                        <form action="/giohang/xoa/<%= sp._id %>" method="POST" onsubmit="return confirm('Xóa sản phẩm này khỏi giỏ hàng?');">
+                                            <button class="btn btn-sm btn-danger">Xóa</button>
+                                        </form>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="chonMua[]" value="<%= sp._id %>" class="neon-checkbox form-check-input">
+                                    </td>
+                                </tr>
+                            <% }) %>
+
+                                <!-- Dòng tổng tiền -->
+                                <tr class="fw-bold text-end txtTongTien">
+                                    <td colspan="5" class="text-end">Tổng tiền tất cả</td>
+                                    <td colspan="2"><%= tongTien.toLocaleString('vi-VN') %> ₫</td>
+                                </tr>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="6" class="text-center text-warning">Giỏ hàng trống.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <!-- Nút quay lại luôn hiển thị -->
+                        <a href="/sanpham" class="btnQuayLai btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Quay lại mua sắm
+                        </a>
+
+                        <!-- Nút thanh toán chỉ hiển thị nếu có sản phẩm -->
+                        <% if (giohang && giohang.length > 0) { %>
+                            <form id="formThanhToan" action="/thanhtoan" method="POST">
+                                <input type="hidden" name="ids" id="selectedIds" />
+                                <button type="submit" class="btnThanhToan btn btn-primary">
+                                    <i class="bi bi-credit-card"></i> Mua sản phẩm đã chọn
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INCLUDE FOOTER -->
+        <%- include('footer') %>
+
+        <!-- KIỂM TRA CHỌN SẢN PHẨM SCRIPT -->
+        <script>
+            document.getElementById('formThanhToan').addEventListener('submit', function (e) {
+                const checkboxes = document.querySelectorAll('input[name="chonMua[]"]:checked');
+                if (checkboxes.length === 0) {
+                    e.preventDefault();
+                    alert('Vui lòng chọn ít nhất 1 sản phẩm để thanh toán!');
+                    return;
+                }
+
+                const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+                document.getElementById('selectedIds').value = selectedIds.join(',');
+            });
+        </script>
+
+        <!-- TÌM KIẾM SẢN PHẨM SCRIPT -->
+        <script>
+            function searchProducts () {
+                const input = document.getElementById('txtSearch');
+                const filter = input.value.toUpperCase();
+                const table = document.querySelector('.table');
+                const tr = table.querySelectorAll('tbody tr');
+
+                tr.forEach(row => {
+                    const isEmptyRow = row.querySelector('td[colspan]'); // dòng "Không có sản phẩm nào"
+                    if (isEmptyRow) {
+                        row.style.display = ''; // luôn hiển thị nếu là dòng rỗng
+                        return;
+                    }
+
+                    let found = false;
+                    const tds = row.querySelectorAll('td');
+                    for (let i = 1; i < tds.length - 2; i++) {
+                        if (tds[i].textContent.toUpperCase().includes(filter)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    row.style.display = found ? '' : 'none';
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const input = document.getElementById('txtSearch');
+                input.addEventListener('keyup', function (event) {
+                    if (event.key === 'Enter') {
+                        searchProducts();
+                    }
+                });
+            });
+        </script>
+        
+    </body>
+    </html>
